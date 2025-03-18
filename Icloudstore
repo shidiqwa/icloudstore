@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iCloud Store - Reseller Resmi Apple</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset dan Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background-color: #fff;
+      color: #1d1d1f;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+      outline: none;
+    }
+    a:focus {
+      outline: 2px solid var(--primary-color);
+    }
+  
+    /* Variabel CSS */
+    :root {
+      --primary-color: #0071e3;
+      --accent-gradient: linear-gradient(90deg, #ffb6c1, #dda0dd, #fffacd, #b0e0e6);
+      --transition-duration: 0.4s;
+      --blur-amount: 15px;
+      --global-padding: 10%;
+    }
+  
+    /* Border Halus untuk Pemisahan (tanpa bayangan) */
+    header, .produk-card, footer {
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+  
+    /* Header dengan Material Blur */
+    header {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 1rem var(--global-padding);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      border-bottom: none;
+      backdrop-filter: blur(var(--blur-amount));
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .logo i {
+      color: var(--primary-color);
+      font-size: 2rem;
+    }
+    nav {
+      position: absolute;
+      right: var(--global-padding);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    nav a {
+      margin: 0 1.5rem;
+      font-weight: 400;
+      font-size: 0.9rem;
+      transition: color var(--transition-duration) ease;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: var(--primary-color);
+    }
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+  
+    /* Hero Section */
+    .hero {
+      margin: 150px var(--global-padding) 0;
+      text-align: center;
+      max-width: 1920px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(var(--blur-amount));
+      transition: background var(--transition-duration) ease, filter var(--transition-duration) ease;
+      border-radius: 20px;
+      padding: 2rem;
+    }
+    .hero:hover {
+      background: rgba(255, 255, 255, 0.8);
+      filter: brightness(1.05);
+    }
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      background: var(--accent-gradient);
+      background-size: 400%;
+      background-position: center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbowText 8s ease infinite;
+    }
+    @keyframes rainbowText {
+      0%, 50%, 100% { background-position: center; }
+    }
+    .hero p {
+      color: #333;
+      font-size: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .produk-image {
+      width: 100%;
+      height: auto;
+      max-height: 400px;
+      object-fit: contain;
+      margin-bottom: 2rem;
+      border-radius: 40px;
+    }
+  
+    /* Produk Section */
+    .produk-section {
+      padding: 4rem var(--global-padding);
+      flex: 1;
+    }
+    .produk-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+      align-items: stretch;
+    }
+    .produk-card-wrapper {
+      border-radius: 50px;
+      padding: 2px;
+      background: var(--accent-gradient);
+      display: inline-block;
+      transition: transform 0.1s ease;
+    }
+    .produk-card-wrapper:active {
+      transform: scale(0.97);
+    }
+    .produk-card {
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 46px;
+      text-align: center;
+      padding: 1.5rem;
+      height: 100%;
+      transition: transform var(--transition-duration) ease, filter var(--transition-duration) ease;
+      backdrop-filter: blur(var(--blur-amount));
+    }
+    .produk-card:hover {
+      transform: translateY(-10px);
+      filter: brightness(1.05);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+    .produk-card:focus-within {
+      outline: 2px solid var(--primary-color);
+    }
+    .spesifikasi {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+      opacity: 0;
+      transition: opacity var(--transition-duration) ease 0.2s;
+    }
+    .produk-card:hover .spesifikasi,
+    .produk-card:focus-within .spesifikasi {
+      opacity: 1;
+    }
+    .spesifikasi-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #333;
+      font-size: 1rem;
+    }
+    .spesifikasi-item i.storage {
+      color: var(--primary-color);
+      font-size: 1.3rem;
+    }
+    .harga {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #1d1d1f;
+      margin: 2rem 0;
+      transition: color var(--transition-duration) ease;
+    }
+    .harga:hover {
+      color: var(--primary-color);
+    }
+    .tombol {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 3rem;
+      background: var(--accent-gradient);
+      background-size: 200%;
+      color: #1d1d1f;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: background-position var(--transition-duration) ease, transform var(--transition-duration) ease, filter var(--transition-duration) ease;
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+    }
+    .tombol:hover {
+      background-position: right;
+      transform: scale(1.05);
+      filter: brightness(1.1);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+    }
+    .tombol:focus {
+      outline: 2px solid var(--primary-color);
+    }
+  
+    /* Footer */
+    footer {
+      background: rgba(245, 245, 247, 0.8);
+      padding: 4rem var(--global-padding);
+      text-align: center;
+      margin-top: auto;
+      backdrop-filter: blur(var(--blur-amount));
+      border-top: none;
+    }
+    .kontak-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .info-item h3 {
+      color: #1d1d1f;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+    .info-item p {
+      color: #333;
+      line-height: 1.6;
+    }
+    .sosmed {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .sosmed a {
+      color: #1d1d1f;
+      font-size: 1.5rem;
+      transition: filter var(--transition-duration) ease, transform var(--transition-duration) ease;
+      padding: 1rem;
+      border-radius: 50%;
+      background: #fff;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sosmed a:hover,
+    .sosmed a:focus {
+      filter: brightness(1.1);
+      transform: translateY(-3px);
+      outline: 2px solid var(--primary-color);
+    }
+  
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header { padding: 1rem 5%; }
+      .hero { margin: 120px 5% 0; padding: 1rem; }
+      .hero h1 { font-size: 2.5rem; }
+      nav { display: none; }
+      .hamburger { display: block; }
+      .produk-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header role="banner">
+    <a href="#" class="logo">
+      <i class="fab fa-apple"></i>
+      <span class="rainbow-accent">iCloudStore</span>
+    </a>
+    <div class="hamburger" aria-label="Menu" onclick="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </div>
+    <nav role="navigation" id="main-nav">
+      <a href="#produk">Produk</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+  </header>
+  
+  <section class="hero" role="banner">
+    <h1 class="rainbow-accent">iPhone Series</h1>
+    <p>Pricelist apple iCloud Store</p>
+    <p>Yuk, belanja di apple icloud store:)</p>
+    <p>Harga hanyalah ilusi, masih bisa dibanting kok, xixi:)</p>
+    <img src="Desain tanpa judul.png" class="produk-image" alt="Tampilan iPhone 15 Series yang elegan" loading="lazy">
+  </section>
+  
+  <section class="produk-section" id="produk" role="main">
+    <div class="produk-grid">
+      <!-- 1. iPhone XR -->
+      <div class="produk-card-wrapper">
+        <div class="produk-card" tabindex="0">
+          <img src="iPhoneXrFinal.png" class="produk-image" alt="Gambar iPhone XR" loading="lazy">
+          <h3>iPhone XR</h3>
+          <div class="spesifikasi">
+            <div class="spesifikasi-item">
+              <i class="fas fa-microchip"></i> Chip A12 Bionic
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-camera"></i> 12MP Kamera
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-hdd storage"></i> 64/128
+            </div>
+          </div>
+          <div class="harga">Rp3.699.000 - Rp4.099.000</div>
+          <a href="https://wa.me/62882002541381" class="tombol" target="_blank">
+            <i class="fab fa-whatsapp"></i> cuss kita silaturahmi
+          </a>
+        </div>
+      </div>
+      <!-- 2. iPhone 11 -->
+      <div class="produk-card-wrapper">
+        <div class="produk-card" tabindex="0">
+          <img src="iPhone11.png" class="produk-image" alt="Gambar iPhone 11" loading="lazy">
+          <h3>iPhone 11</h3>
+          <div class="spesifikasi">
+            <div class="spesifikasi-item">
+              <i class="fas fa-microchip"></i> Chip A13 Bionic
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-camera"></i> Dual Kamera 12MP
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-hdd storage"></i> 64/128
+            </div>
+          </div>
+          <div class="harga">Rp4.699.000 - Rp5.150.000</div>
+          <a href="https://wa.me/62882002541381" class="tombol" target="_blank">
+            <i class="fab fa-whatsapp"></i> cuss kita silaturahmi
+          </a>
+        </div>
+      </div>
+      <!-- 3. iPhone 11 Pro -->
+      <div class="produk-card-wrapper">
+        <div class="produk-card" tabindex="0">
+          <img src="iphone11pro.png" class="produk-image" alt="Gambar iPhone 11 PRO" loading="lazy">
+          <h3>iPhone 11 Pro</h3>
+          <div class="spesifikasi">
+            <div class="spesifikasi-item">
+              <i class="fas fa-microchip"></i> Chip A13 Bionic
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-camera"></i> Triple Kamera 12MP
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-hdd storage"></i> 64/256
+            </div>
+          </div>
+          <div class="harga">Rp5.199.000 - Rp5.999.000</div>
+          <a href="https://wa.me/62882002541381" class="tombol" target="_blank">
+            <i class="fab fa-whatsapp"></i> cuss kita silaturahmi
+          </a>
+        </div>
+      </div>
+      <!-- 4. iPhone 11 Pro Max -->
+      <div class="produk-card-wrapper">
+        <div class="produk-card" tabindex="0">
+          <img src="iphone11promax.png" class="produk-image" alt="Gambar iPhone 11 PROMAX" loading="lazy">
+          <h3>iPhone 11 Pro Max</h3>
+          <div class="spesifikasi">
+            <div class="spesifikasi-item">
+              <i class="fas fa-microchip"></i> Chip A13 Bionic
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-camera"></i> Triple Kamera 12MP
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-hdd storage"></i> 64/256
+            </div>
+          </div>
+          <div class="harga">Rp5.999.000 - Rp6.999.000</div>
+          <a href="https://wa.me/62882002541381" class="tombol" target="_blank">
+            <i class="fab fa-whatsapp"></i> cuss kita silaturahmi
+          </a>
+        </div>
+      </div>
+      <!-- 5. iPhone 12 -->
+      <div class="produk-card-wrapper">
+        <div class="produk-card" tabindex="0">
+          <img src="iphone12.png" class="produk-image" alt="Gambar iPhone 12" loading="lazy">
+          <h3>iPhone 12</h3>
+          <div class="spesifikasi">
+            <div class="spesifikasi-item">
+              <i class="fas fa-microchip"></i> Chip A14 Bionic
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-camera"></i> Dual Kamera 12MP
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-hdd storage"></i> 64/128
+            </div>
+          </div>
+          <div class="harga">Rp4.999.000 - Rp5.999.000</div>
+          <a href="https://wa.me/62882002541381" class="tombol" target="_blank">
+            <i class="fab fa-whatsapp"></i> cuss kita silaturahmi
+          </a>
+        </div>
+      </div>
+      <!-- 6. iPhone 12 Pro -->
+      <div class="produk-card-wrapper">
+        <div class="produk-card" tabindex="0">
+          <img src="iPhone12pro.png" class="produk-image" alt="Gambar iPhone 12 PRO" loading="lazy">
+          <h3>iPhone 12 Pro</h3>
+          <div class="spesifikasi">
+            <div class="spesifikasi-item">
+              <i class="fas fa-microchip"></i> Chip A14 Bionic
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-camera"></i> Triple Kamera 12MP
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-hdd storage"></i> 128/256
+            </div>
+          </div>
+          <div class="harga">Rp6.300.000 - Rp7.699.000</div>
+          <a href="https://wa.me/62882002541381" class="tombol" target="_blank">
+            <i class="fab fa-whatsapp"></i> cuss kita silaturahmi
+          </a>
+        </div>
+      </div>
+      <!-- 7. iPhone 12 Pro Max -->
+      <div class="produk-card-wrapper">
+        <div class="produk-card" tabindex="0">
+          <img src="iphone12promax.png" class="produk-image" alt="Gambar iPhone 12 PROMAX" loading="lazy">
+          <h3>iPhone 12 Pro Max</h3>
+          <div class="spesifikasi">
+            <div class="spesifikasi-item">
+              <i class="fas fa-microchip"></i> Chip A14 Bionic
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-camera"></i> Triple Kamera 12MP
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-hdd storage"></i> 128
+            </div>
+          </div>
+          <div class="harga">Rp8.499.000</div>
+          <a href="https://wa.me/62882002541381" class="tombol" target="_blank">
+            <i class="fab fa-whatsapp"></i> cuss kita silaturahmi
+          </a>
+        </div>
+      </div>
+      <!-- 8. iPhone 13 -->
+      <div class="produk-card-wrapper">
+        <div class="produk-card" tabindex="0">
+          <img src="iphone13.png" class="produk-image" alt="Gambar iPhone 13" loading="lazy">
+          <h3>iPhone 13</h3>
+          <div class="spesifikasi">
+            <div class="spesifikasi-item">
+              <i class="fas fa-microchip"></i> Chip A15 Bionic
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-camera"></i> Dual Kamera 12MP
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-hdd storage"></i> 128/256
+            </div>
+          </div>
+          <div class="harga">Rp6.999.000 - Rp7.999.000</div>
+          <a href="https://wa.me/62882002541381" class="tombol" target="_blank">
+            <i class="fab fa-whatsapp"></i> cuss kita silaturahmi
+          </a>
+        </div>
+      </div>
+      <!-- 9. iPhone 13 Pro -->
+      <div class="produk-card-wrapper">
+        <div class="produk-card" tabindex="0">
+          <img src="iphone13pro.png" class="produk-image" alt="Gambar iPhone 13 PRO" loading="lazy">
+          <h3>iPhone 13 Pro</h3>
+          <div class="spesifikasi">
+            <div class="spesifikasi-item">
+              <i class="fas fa-microchip"></i> Chip A15 Bionic
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-camera"></i> Triple Kamera 12MP
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-hdd storage"></i> 128/256
+            </div>
+          </div>
+          <div class="harga">Rp8.499.000 - Rp8.999.000</div>
+          <a href="https://wa.me/62882002541381" class="tombol" target="_blank">
+            <i class="fab fa-whatsapp"></i> cuss kita silaturahmi
+          </a>
+        </div>
+      </div>
+      <!-- 10. iPhone 13 Pro Max -->
+      <div class="produk-card-wrapper">
+        <div class="produk-card" tabindex="0">
+          <img src="iphone13promax.png" class="produk-image" alt="Gambar iPhone 13 PROMAX" loading="lazy">
+          <h3>iPhone 13 Pro Max</h3>
+          <div class="spesifikasi">
+            <div class="spesifikasi-item">
+              <i class="fas fa-microchip"></i> Chip A15 Bionic
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-camera"></i> Triple Kamera 12MP
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-hdd storage"></i> 128/256
+            </div>
+          </div>
+          <div class="harga">Rp9.999.000 - Rp10.999.000</div>
+          <a href="https://wa.me/62882002541381" class="tombol" target="_blank">
+            <i class="fab fa-whatsapp"></i> cuss kita silaturahmi
+          </a>
+        </div>
+      </div>
+      <!-- 11. iPhone 14 -->
+      <div class="produk-card-wrapper">
+        <div class="produk-card" tabindex="0">
+          <img src="iphone14.png" class="produk-image" alt="Gambar iPhone 14" loading="lazy">
+          <h3>iPhone 14</h3>
+          <div class="spesifikasi">
+            <div class="spesifikasi-item">
+              <i class="fas fa-microchip"></i> Chip A16 Bionic
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-camera"></i> Dual Kamera 12MP
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-hdd storage"></i> 128
+            </div>
+          </div>
+          <div class="harga">Rp7.900.000</div>
+          <a href="https://wa.me/62882002541381" class="tombol" target="_blank">
+            <i class="fab fa-whatsapp"></i> cuss kita silaturahmi
+          </a>
+        </div>
+      </div>
+      <!-- 12. iPhone 14 Pro -->
+      <div class="produk-card-wrapper">
+        <div class="produk-card" tabindex="0">
+          <img src="iphone14pro.png" class="produk-image" alt="Gambar iPhone 14 PRO" loading="lazy">
+          <h3>iPhone 14 Pro</h3>
+          <div class="spesifikasi">
+            <div class="spesifikasi-item">
+              <i class="fas fa-microchip"></i> Chip A16 Bionic
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-camera"></i> Triple Kamera 12MP
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-hdd storage"></i> 128/256
+            </div>
+          </div>
+          <div class="harga">Rp12.999.000 - Rp13.699.000</div>
+          <a href="https://wa.me/62882002541381" class="tombol" target="_blank">
+            <i class="fab fa-whatsapp"></i> cuss kita silaturahmi
+          </a>
+        </div>
+      </div>
+      <!-- 13. iPhone 14 Pro Max -->
+      <div class="produk-card-wrapper">
+        <div class="produk-card" tabindex="0">
+          <img src="iphone14promax.png" class="produk-image" alt="Gambar iPhone 14 PROMAX" loading="lazy">
+          <h3>iPhone 14 Pro Max</h3>
+          <div class="spesifikasi">
+            <div class="spesifikasi-item">
+              <i class="fas fa-microchip"></i> Chip A16 Bionic
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-camera"></i> Triple Kamera 12MP
+            </div>
+            <div class="spesifikasi-item">
+              <i class="fas fa-hdd storage"></i> 128/256
+            </div>
+          </div>
+          <div class="harga">Rp14.699.000 - Rp15.599.000</div>
+          <a href="https://wa.me/62882002541381" class="tombol" target="_blank">
+            <i class="fab fa-whatsapp"></i> cuss kita silaturahmi
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <footer id="kontak">
+    <div class="kontak-info">
+      <div class="info-item">
+        <h3><i class="fas fa-map-marker-alt"></i> Lokasi Toko</h3>
+        <p>
+          Apple iCloud Store<br>
+          Jl. Raya Bojongsoang No.386a, Cipagalo<br>
+          Kec. Bojongsoang, Kabupaten Bandung<br>
+          Jawa Barat 40287
+        </p>
+      </div>
+      <div class="info-item">
+        <h3><i class="fas fa-phone"></i> Kontak</h3>
+        <p>
+          WhatsApp: 0882-0025-41381<br>
+          ig: @icloud_store.bdg<br>
+          Tiktok: @iCloud_store.bdg<br>
+          Buka Setiap Hari: 09.00 - 21.00 WIB
+        </p>
+      </div>
+    </div>
+    <div class="sosmed">
+      <a href="https://www.instagram.com/icloud_store.bdg" target="_blank">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://wa.me/62882002541381" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+      <a href="https://maps.app.goo.gl/g3CXxSwCqX14du1n7" target="_blank">
+        <i class="fas fa-map-marked-alt"></i>
+      </a>
+    </div>
+    <p style="color: #333; margin-top: 2rem; font-size: 0.9rem;">
+      © 2022 iCloud Store - Authorized Apple Reseller<br>
+    </p>
+  </footer>
+  <script>
+    function toggleMenu() {
+      var nav = document.getElementById('main-nav');
+      if (nav.style.display === 'block') {
+        nav.style.display = 'none';
+      } else {
+        nav.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>
